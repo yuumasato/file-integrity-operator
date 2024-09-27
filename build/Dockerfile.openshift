@@ -1,4 +1,4 @@
-FROM registry-proxy.engineering.redhat.com/rh-osbs/openshift-golang-builder:v1.22 AS builder
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:v1.22 as builder
 
 WORKDIR /go/src/github.com/openshift/file-integrity-operator
 
@@ -8,7 +8,8 @@ COPY . .
 
 RUN make build
 
-FrOM registry.redhat.io/ubi9/ubi-minimal:latest
+FROM registry.redhat.io/ubi9/ubi-minimal:latest
+
 # We need tar for the bundle build process to work since it pulls the operator
 # manifests from the operator image using `oc cp`, which will fail if `tar`
 # isn't available on the operator container image. Find a way to do this
