@@ -87,11 +87,11 @@ const (
 )
 
 func metricsTestPodOverrides(image string) string {
-	return fmt.Sprintf(`--overrides={"spec":{"securityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"containers":[{"name":"metrics-test","image":"%s","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]}}}]}}`, image)
+	return fmt.Sprintf(`--overrides={"spec":{"securityContext":{"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}},"containers":[{"name":"metrics-test","image":"%s","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]}}}]}}`, image)
 }
 
 func metricsTestPodOverridesWithSA(image, sa string) string {
-	return fmt.Sprintf(`--overrides={"spec":{"serviceAccountName":"%s","securityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"containers":[{"name":"metrics-test","image":"%s","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]}}}]}}`, sa, image)
+	return fmt.Sprintf(`--overrides={"spec":{"serviceAccountName":"%s","securityContext":{"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}},"containers":[{"name":"metrics-test","image":"%s","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]}}}]}}`, sa, image)
 }
 
 var mcLabelForWorkerRole = map[string]string{
